@@ -21,6 +21,14 @@ This project is a setup for automated testing using Playwright with the Page Obj
    npm run test:gherkin
    ```
 
+### Environment Variables
+
+Before running the tests, create a `.env` file at the root of the project based on the `.env.example` template:
+
+```bash
+cp .env.example .env
+```
+
 ## ESLint Configuration
 
 This project uses [ESLint](https://eslint.org/) with support for **TypeScript** and **Playwright** to ensure clean, consistent, and maintainable code.
