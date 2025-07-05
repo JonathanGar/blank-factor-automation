@@ -1,0 +1,32 @@
+{
+  "name": "blank-factor-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:gherkin": "npx cucumber-js src/features --require-module ts-node/register --require-module tsconfig-paths/register --require src/support/world.ts --require src/steps/**/*.steps.ts",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@cucumber/cucumber": "^11.3.0",
+    "@eslint/js": "^9.30.1",
+    "@playwright/test": "^1.53.2",
+    "@typescript-eslint/eslint-plugin": "^8.35.1",
+    "@typescript-eslint/parser": "^8.35.1",
+    "dotenv": "^17.0.1",
+    "eslint": "^9.30.1",
+    "eslint-plugin-playwright": "^2.2.0",
+    "ts-node": "^10.9.2",
+    "typescript-eslint": "^8.35.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "tsconfig-paths": "^4.2.0"
+  }
+}
