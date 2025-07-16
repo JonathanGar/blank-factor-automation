@@ -1,6 +1,8 @@
 import { Locator, Page } from '@playwright/test';
 import { get } from 'lodash';
 
+import { elementMap } from '../utils/elementNameMap';
+
 abstract class PageObject {
     protected _page: Page;
     protected _baseURL: string;
@@ -54,10 +56,11 @@ abstract class PageObject {
         return this.page.locator('h1');
     }
 
-    getElement(elementPath: string): Locator {
+    getElement(elementName: string): Locator {
+        const elementPath = elementMap[elementName] || elementName;
         const element = get(this, elementPath);
         if (!element) {
-            throw new Error(`Element not found on current page: ${elementPath}`);
+            throw new Error(`Element not found on current page: ${elementName}`);
         }        
         return element;
     }

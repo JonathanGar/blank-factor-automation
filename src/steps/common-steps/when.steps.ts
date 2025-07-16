@@ -11,9 +11,9 @@ When('I move the mouse over the {string}', async function (menuTriggerPath: stri
   await currentPage.getElement(menuTriggerPath).hover();
 });
 
-When('I click on the {string}', async function (elementPath: string) {
+When('I click on the {string}', async function (elementName: string) {
   const currentPage: PageObject = this.currentPage;
-  const element = currentPage.getElement(elementPath);
+  const element = currentPage.getElement(elementName);
   await element.waitFor({ state: 'visible' })
   await element.click();
 });
@@ -25,22 +25,22 @@ When('I am on the {string} page', async function (pageName: string) {
   this.currentPage = pageObject;
 });
 
-When('I scroll to the section {string}', async function (elementPath: string) {
+When('I scroll to the section {string}', async function (elementName: string) {
   const currentPage: PageObject = this.currentPage;
-  const element = currentPage.getElement(elementPath);
+  const element = currentPage.getElement(elementName);
   await element.scrollIntoViewIfNeeded();
 });
 
-When('I copy the text from the {string}', async function (elementPath: string) {
+When('I copy the text from the {string}', async function (elementName: string) {
   const currentPage: PageObject = this.currentPage;
-  const element = currentPage.getElement(elementPath);
+  const element = currentPage.getElement(elementName);
   const textContent = await element.textContent();
 
   if (textContent) {
     this.clipboard = textContent.trim();
     log(`Copied text: ${this.clipboard}`);
   } else {
-    throw new Error(`No text found in element: ${elementPath}`);
+    throw new Error(`No text found in element: ${elementName}`);
   }
 });
 

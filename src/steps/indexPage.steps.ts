@@ -1,6 +1,7 @@
 import { Given, When } from '@cucumber/cucumber';
 
 import IndexPage from '../pages/indexPage';
+import { log } from '../utils/helpers';
 
 
 let indexPage: IndexPage;
@@ -12,6 +13,10 @@ Given('I navigate to the index page', async function () {
 });
 
 When('I accept the site policy', async function () {
-  await indexPage.consentComponent.acceptAllButton.click();
+  try {
+   await indexPage.consentComponent.acceptAllButton.click();
+  } catch (error) {
+    throw new Error('Error when accepting site policy' + error.message);
+  }
 });
 
