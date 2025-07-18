@@ -9,12 +9,15 @@ on:
 jobs:
   run-ui-tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        browser: [chromium, firefox]
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: setup Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '24'
@@ -22,14 +25,44 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run tests with Cucumber BDD and Gherkin
+      - name: Set browser environment
+        run: echo "BROWSER=${{ matrix.browser }}" >> $GITHUB_ENV
+
+      - name: Run BDD tests
         run: npm run test:gherkin
 
       - name: Generate HTML report
         run: npm run report:html
 
-      - name: upload report as artifact
-        uses: actions/upload-artifact@v3
+      - name: Upload HTML report as artifact (v4)
+        uses: actions/upload-artifact@v4
         with:
-          name: UI-Test-Report
+          name: UI-Test-Report-${{ matrix.browser }}
           path: cucumber-report
+          overwrite: true
+
+  deploy-report:
+    needs: run-ui-tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Regenerate HTML report (optional)
+        run: npm run report:html
+
+      - name: Deploy report to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: cucumber-report
+          publish_branch: gh-pages
