@@ -1,7 +1,6 @@
 import { Given, When } from '@cucumber/cucumber';
 
 import IndexPage from '../pages/indexPage';
-import { log } from '../utils/helpers';
 
 
 let indexPage: IndexPage;
