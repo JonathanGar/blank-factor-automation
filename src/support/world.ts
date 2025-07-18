@@ -1,6 +1,8 @@
-import { setWorldConstructor, Before, After, setDefaultTimeout, World } from '@cucumber/cucumber';
+import { setWorldConstructor, Before, After, setDefaultTimeout, World, Status } from '@cucumber/cucumber';
 import { chromium, Browser, Page, BrowserContext } from 'playwright';
 import dotenv from 'dotenv';
+import fs from 'fs';
+import path from 'path';
 
 
 dotenv.config();
@@ -33,4 +35,15 @@ After(async function (this: CustomWorld) {
   if (this.page) await this.page.close();
   if (this.context) await this.context.close();
   if (this.browser) await this.browser.close();
+});
+
+After(async function (scenario) {
+  if (scenario.result?.status === Status.FAILED) {
+    const screenshot = await this.page.screenshot();
+    const fileName = `screenshot-${Date.now()}.png`;
+    const outputPath = path.join('reports/screenshots', fileName);
+    fs.mkdirSync('reports/screenshots', { recursive: true });
+    fs.writeFileSync(outputPath, screenshot);
+    await this.attach(screenshot, 'image/png');
+  }
 });

@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "test:gherkin": "npx cucumber-js src/features --require-module ts-node/register --require-module tsconfig-paths/register --require src/support/world.ts --require src/steps/**/*.steps.ts",
+    "test:gherkin": "npx cucumber-js src/features",
+    "report:html": "node generate-report.js",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prepare": "husky install"
@@ -27,6 +28,7 @@
     "eslint": "^9.30.1",
     "eslint-plugin-playwright": "^2.2.0",
     "husky": "^8.0.0",
+    "multiple-cucumber-html-reporter": "^3.9.3",
     "ts-node": "^10.9.2",
     "typescript-eslint": "^8.35.1"
   },
