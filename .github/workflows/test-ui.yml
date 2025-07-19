@@ -1,3 +1,6 @@
+permissions:
+  contents: write
+
 name: UI Automation Pipeline
 
 on:
@@ -64,7 +67,7 @@ jobs:
           name: UI-Test-Report-firefox
           path: publish/firefox
 
-      - name: Deploy both to GitHub Pages
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
