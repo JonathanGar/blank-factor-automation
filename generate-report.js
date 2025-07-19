@@ -7,9 +7,12 @@ reporter.generate({
   reportName: 'UI Test Report - Blank Factor',
   pageTitle: 'QA Automation Report',
   metadata: {
-    browser: { name: 'Chrome', version: 'latest' },
+    browser: {
+      name: process.env.BROWSER || 'chromium',
+      version: 'latest'
+    },
     device: 'CI Runner or Local Machine',
-    platform: { name: 'Ubuntu', version: 'latest' },
+    platform: { name: 'GitHub Actions', version: 'CI' },
     customData: {
       title: 'Build Info',
       data: [

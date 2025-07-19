@@ -1,5 +1,5 @@
 import { setWorldConstructor, Before, After, setDefaultTimeout, World, Status } from '@cucumber/cucumber';
-import { chromium, Browser, Page, BrowserContext } from 'playwright';
+import { chromium, firefox, webkit, Browser, Page, BrowserContext } from 'playwright';
 import dotenv from 'dotenv';
 import fs from 'fs';
 import path from 'path';
@@ -23,7 +23,13 @@ class CustomWorld extends World {
 setWorldConstructor(CustomWorld);
 
 Before(async function (this: CustomWorld) {
-  this.browser = await chromium.launch({ headless: headless });
+  const browserName = process.env.BROWSER || 'chromium';
+  const browserType = {
+    chromium,
+    firefox,
+    webkit
+  }[browserName];
+  this.browser =  await browserType.launch({ headless: headless });
   this.context = await this.browser.newContext({
   });
   this.page = await this.context.newPage();
