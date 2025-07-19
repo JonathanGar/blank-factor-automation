@@ -28,6 +28,9 @@ jobs:
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
+      - name: Use fallback .env
+        run: cp .env.example .env
+
       - name: Set browser environment
         run: echo "BROWSER=${{ matrix.browser }}" >> $GITHUB_ENV
 
