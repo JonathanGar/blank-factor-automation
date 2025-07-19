@@ -40,11 +40,11 @@ jobs:
       - name: Generate HTML report
         run: npm run report:html
 
-      - name: Upload HTML report as artifact (v4)
+      - name: Upload HTML report as artifact
         uses: actions/upload-artifact@v4
         with:
           name: UI-Test-Report-${{ matrix.browser }}
-          path: cucumber-report
+          path: cucumber-report/${{ matrix.browser }}
           overwrite: true
 
   deploy-report:
@@ -52,23 +52,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
+      - name: Download Chromium report
+        uses: actions/download-artifact@v4
         with:
-          node-version: '24'
+          name: UI-Test-Report-chromium
+          path: publish/chromium
 
-      - name: Install dependencies
-        run: npm ci
+      - name: Download Firefox report
+        uses: actions/download-artifact@v4
+        with:
+          name: UI-Test-Report-firefox
+          path: publish/firefox
 
-      - name: Regenerate HTML report (optional)
-        run: npm run report:html
-
-      - name: Deploy report to GitHub Pages
+      - name: Deploy both to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: cucumber-report
+          publish_dir: publish
           publish_branch: gh-pages

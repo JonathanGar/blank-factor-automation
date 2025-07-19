@@ -1,8 +1,9 @@
 const reporter = require('multiple-cucumber-html-reporter');
+const browser = process.env.BROWSER || 'chromium';
 
 reporter.generate({
   jsonDir: 'reports',
-  reportPath: 'cucumber-report',
+  reportPath: `cucumber-report/${browser}`,
   displayDuration: true,
   reportName: 'UI Test Report - Blank Factor',
   pageTitle: 'QA Automation Report',
