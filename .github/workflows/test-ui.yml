@@ -67,6 +67,10 @@ jobs:
           name: UI-Test-Report-firefox
           path: publish/firefox
 
+      - name: Add landing page
+        run: |
+          mkdir -p publish
+          echo '<!DOCTYPE html><html><head><title>UI Test Reports</title></head><body><h1>Test Reports</h1><ul><li><a href="./chromium/">Chromium Report</a></li><li><a href="./firefox/">Firefox Report</a></li></ul></body></html>' > publish/index.html
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
